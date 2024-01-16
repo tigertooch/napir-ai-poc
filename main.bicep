@@ -1,16 +1,23 @@
 // main.bicep
-module vnetConfig 'resource/vnetConfig.bicep' = {
-  name: 'vnetConfig'
+module vnetconfig 'resource/vnetconfig.bicep' = {
+  name: 'vnetconfig'
 }
+// module subnetconfig 'resource/subnetsConfig.bicep' = {
+//   name: 'subnetconfig'
+// }
 module vnetModule 'modules/vnet.bicep' = {
-  name: 'myVNetModule'
+  name: 'vnetModule'
   params: {
-    location: vnetConfig.outputs.location
-    vnetName: vnetConfig.outputs.vnetName
-    subnetName: vnetConfig.outputs.subnetName
-    vnetAddressPrefix: vnetConfig.outputs.vnetAddressPrefix
-    subnetAddressPrefix: vnetConfig.outputs.subnetAddressPrefix
+    location: vnetconfig.outputs.location
+    vnetName: vnetconfig.outputs.vnetName
+    vnetAddressPrefix: vnetconfig.outputs.vnetAddressPrefix
   }
 }
+// module subnetModule 'modules/subnet.bicep' = {
+//   name: 'subnetModule'
+//   params: {
+//     subnetinfo: subnetconfig.outputs.subnetinfo
+//     vnetName: vnetconfig.outputs.vnetName
+//   }
+// }
 
-output vnetId string = vnetModule.outputs.vnetId
