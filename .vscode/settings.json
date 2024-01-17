@@ -1,0 +1,4 @@
+{
+    "bicep.completions.getAllAccessibleAzureContainerRegistries": true,
+    "bicep.experimental.disableDeploymentPane": true
+}
