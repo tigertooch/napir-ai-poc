@@ -10,6 +10,7 @@ module vnetModule 'modules/vnetModule.bicep' = {
     vnetName: vnetconfig.outputs.vnetName
     vnetAddressPrefix: vnetconfig.outputs.vnetAddressPrefix
     subnetinfo: vnetconfig.outputs.subnetinfo
+    arrayRulesOutput:vnetconfig.outputs.arrayRulesOutput
   }
 }
 
