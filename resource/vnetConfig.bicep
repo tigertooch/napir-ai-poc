@@ -14,69 +14,57 @@ param subnetconfig object = {
   }
 }
 
-param allowedRules array = [
-  {
-    name: 'AllowSSH'
+var allowRuleList = [
+                      {name: 'AllowSSH',priority: 1000,access: 'Allow',destinationPortRange: '22'}
+                      {name: 'AllowHTTP' ,priority: 1010,access: 'Allow',destinationPortRange: '80'}
+                    ]
+var allowedRules = [
+  for rule in allowRuleList: {
+    name: rule.name
     properties: {
-      priority: 1000
-      access: 'Allow'
+      priority: rule.priority
+      access: rule.access
       direction: 'Inbound'
       protocol: 'Tcp'
       sourcePortRange: '*'
       sourceAddressPrefix: '*'
-      destinationPortRange: '22'
-      destinationAddressPrefix: '*'
-    }
-  }
-  {
-    name: 'AllowHTTP'
-    properties: {
-      priority: 1010
-      access: 'Allow'
-      direction: 'Inbound'
-      protocol: 'Tcp'
-      sourcePortRange: '*'
-      sourceAddressPrefix: '*'
-      destinationPortRange: '80'
+      destinationPortRange: rule.destinationPortRange
       destinationAddressPrefix: '*'
     }
   }
 ]
 
-param deniedRules array = [
-  {
-    name: 'DenyFTP'
+var denyRuleList = [
+                    {name: 'DenyFTP',priority: 1100,access: 'Deny',destinationPortRange: '21'}
+                    {name: 'DenySMTP',priority: 1110,access: 'Deny',destinationPortRange: '25'}
+                    ]
+var deniedRules = [
+  for rule in denyRuleList: {
+    name: rule.name
     properties: {
-      priority: 1100
-      access: 'Deny'
+      priority: rule.priority
+      access: rule.access
       direction: 'Inbound'
       protocol: 'Tcp'
       sourcePortRange: '*'
       sourceAddressPrefix: '*'
-      destinationPortRange: '21'
-      destinationAddressPrefix: '*'
-    }
-  }
-  {
-    name: 'DenySMTP'
-    properties: {
-      priority: 1110
-      access: 'Deny'
-      direction: 'Inbound'
-      protocol: 'Tcp'
-      sourcePortRange: '*'
-      sourceAddressPrefix: '*'
-      destinationPortRange: '25'
+      destinationPortRange: rule.destinationPortRange
       destinationAddressPrefix: '*'
     }
   }
 ]
 
+
+// 在输出部分进行赋值，使用json()函数进行转换
 output nsgName string = nsgName
 output location string = location
 output vnetName string = vnetName
 output vnetAddressPrefix string = vnetAddressPrefix
 output subnetinfo object=subnetconfig
-output arrayRulesOutput array = union(allowedRules, deniedRules)
+output rulesinfo array = union(allowedRules, deniedRules)
+
+
+
+
 
 

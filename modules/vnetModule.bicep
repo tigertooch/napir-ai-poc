@@ -5,13 +5,13 @@ param vnetName string
 param vnetAddressPrefix string
 param subnetinfo object
 param nsgName string
-param arrayRulesOutput array
+param rulesinfo array
 
 resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   name: nsgName
   location: location
   properties: {
-    securityRules: arrayRulesOutput
+    securityRules: rulesinfo
   }
 }
 
