@@ -54,8 +54,6 @@ var deniedRules = [
   }
 ]
 
-
-// 在输出部分进行赋值，使用json()函数进行转换
 output nsgName string = nsgName
 output location string = location
 output vnetName string = vnetName
